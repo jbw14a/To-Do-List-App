@@ -38,6 +38,20 @@ public class SignInActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         signInButton = findViewById(R.id.SignInButton);
         signUpButton = findViewById(R.id.EnterSignUpButton);
+
+        //Call SignIn button
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                signInUser(v);
+            }
+        });
+
+        //Call SignUp button
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                enterSignUp(v);
+            }
+        });
     }
 
     //Called as onclick listener from UI ...I never use 'view'..why
