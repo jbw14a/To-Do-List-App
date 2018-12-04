@@ -21,10 +21,13 @@ public class SignInActivity extends AppCompatActivity {
 
     private static final String TAG = "SignInActivity";
     private FirebaseAuth mAuth;
-    private Button SignUp;
 
+    private Button signInButton;
+    private Button signUpButton;
     private static EditText email;
     private static EditText password;
+
+
 
     private static boolean isSignedIn = false;
 
@@ -33,10 +36,12 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
         mAuth = FirebaseAuth.getInstance();
+        signInButton = findViewById(R.id.SignInButton);
+        signUpButton = findViewById(R.id.EnterSignUpButton);
     }
 
     //Called as onclick listener from UI ...I never use 'view'..why
-    public void signInUser(View view){
+    public void signInUser(final View view){
         this.email = (EditText) findViewById(R.id.EmailSignIn);
         this.password = (EditText) findViewById(R.id.PasswordSignIn);
         final String EMAIL = this.email.getText().toString();
@@ -52,7 +57,7 @@ public class SignInActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             toast("Signed in successfully");
                             isSignedIn = true;
-                            //updateUI(user);
+                            enterToDoHome(view);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -81,6 +86,13 @@ public class SignInActivity extends AppCompatActivity {
     public void enterSignUp(View view){
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
+    }
+
+    public void enterToDoHome(View view){
+        if (isSignedIn){
+            Intent intent = new Intent(this, ToDoHome.class);
+            startActivity(intent);
+        }
     }
 
     public void toast(String message){
