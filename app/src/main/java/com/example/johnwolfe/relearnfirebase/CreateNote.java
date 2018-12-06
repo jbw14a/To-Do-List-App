@@ -46,7 +46,10 @@ public class CreateNote extends AppCompatActivity {
     }
 
     public void submitNoteToDb(View view){
-
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null){
+            //yourmom
+        }
 
     }
 
