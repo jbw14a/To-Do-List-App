@@ -33,7 +33,8 @@
         <activity
             android:name=".ToDoHome"
             android:label="@string/title_activity_to_do_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".CreateNote"></activity>
     </application>
 
 </manifest>
