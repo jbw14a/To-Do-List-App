@@ -20,26 +20,25 @@ import java.util.ArrayList;
 //                                               <ClassName.ViewHolderMethod>
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private static final String TAG = "Adapter";
-
-    private ArrayList<String> noteImages;
+    
     private ArrayList<String> noteTitles;
+    private ArrayList<String> noteBodies;
     private Context mContext;
 
-    public Adapter(ArrayList<String> noteImages, ArrayList<String> noteTitles, Context mContext) {
-        this.noteImages = noteImages;
+    public Adapter (ArrayList<String> noteTitles, ArrayList<String> noteBodies, Context mContext) {
         this.noteTitles = noteTitles;
+        this.noteBodies = noteBodies;
         this.mContext = mContext;
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder{
-
-        ImageView noteImage;
+    
         TextView noteTitle;
-
+        TextView noteBody;
+        
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            noteImage = itemView.findViewById(R.id.NoteImage);
             noteTitle = itemView.findViewById(R.id.NoteTitle);
+            noteBody = itemView.findViewById(R.id.NoteBody);
         }
     }
 
@@ -56,15 +55,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         Log.d(TAG, "New Item Printed: " + i);
 
-        RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.ic_launcher_background);
-
-        Glide.with(mContext)
-                .load(noteImages.get(i))
-                .apply(requestOptions)
-                .into(viewHolder.noteImage);
-
         viewHolder.noteTitle.setText(noteTitles.get(i));
-        viewHolder.noteImage.setOnClickListener(new View.OnClickListener() {
+        viewHolder.noteBody.setText(noteBodies.get(i));
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: " + noteTitles.get(i));
@@ -74,7 +68,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return noteImages.size();
+        return noteBodies.size();
     }
 
     public void toast(String message){
@@ -82,8 +76,5 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         Toast toast = Toast.makeText(mContext, message, duration);
         toast.show();
     }
-
-
-
 
 }
