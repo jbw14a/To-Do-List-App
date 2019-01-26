@@ -30,7 +30,7 @@ public class CreateNote extends AppCompatActivity {
         setContentView(R.layout.activity_create_note);
 
         submitNote = (Button) findViewById(R.id.submitNote);
-        noteText = (EditText) findViewById(R.id.noteText);
+
 
         // Must be signed in to use
         mAuth = FirebaseAuth.getInstance();
@@ -47,6 +47,10 @@ public class CreateNote extends AppCompatActivity {
 
     public void submitNoteToDb(View view){
         FirebaseUser user = mAuth.getCurrentUser();
+
+        this.noteText = (EditText) findViewById(R.id.noteText);
+        String noteText = this.noteText.getText().toString();
+
         if (user != null){
             //yourmom
         }

@@ -7,23 +7,23 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 //                                               <ClassName.ViewHolderMethod>
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private static final String TAG = "Adapter";
 
-    ArrayList<String> noteImages;
-    ArrayList<String> noteTitles;
-    Context mContext;
+    private ArrayList<String> noteImages;
+    private ArrayList<String> noteTitles;
+    private Context mContext;
 
     public Adapter(ArrayList<String> noteImages, ArrayList<String> noteTitles, Context mContext) {
         this.noteImages = noteImages;
@@ -33,15 +33,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        CircleImageView noteImage;
+        ImageView noteImage;
         TextView noteTitle;
-        RelativeLayout listItem;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             noteImage = itemView.findViewById(R.id.NoteImage);
             noteTitle = itemView.findViewById(R.id.NoteTitle);
-            listItem = itemView.findViewById(R.id.ListItem);
         }
     }
 
@@ -49,7 +47,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         // Copy paste for any new RecyclerView
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_list_notes, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_list_note, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -58,16 +56,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, final int i) {
         Log.d(TAG, "New Item Printed: " + i);
 
-        Glide.with(mContext)
-                .asBitmap()
-                .load(noteImages.get(i))
-                .into(viewHolder.noteImage);
-        viewHolder.noteTitle.setText(noteTitles.get(i));
+        RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.ic_launcher_background);
 
-        viewHolder.listItem.setOnClickListener(new View.OnClickListener(){
+        Glide.with(mContext)
+                .load(noteImages.get(i))
+                .apply(requestOptions)
+                .into(viewHolder.noteImage);
+
+        viewHolder.noteTitle.setText(noteTitles.get(i));
+        viewHolder.noteImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toast("Clicked on ListItem " + noteTitles.get(i));
+                Log.d(TAG, "onClick: " + noteTitles.get(i));
             }
         });
     }

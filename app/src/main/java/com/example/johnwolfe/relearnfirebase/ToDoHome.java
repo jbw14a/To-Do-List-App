@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 public class ToDoHome extends AppCompatActivity {
     private static final String TAG = "ToDoHome";
+    private static final int NUM_COLUMNS = 2;
 
     ArrayList<String> noteImages = new ArrayList<>();
     ArrayList<String> noteTitles = new ArrayList<>();
@@ -53,12 +55,13 @@ public class ToDoHome extends AppCompatActivity {
         initRecyclerView();
     }
 
-    public void initRecyclerView(){
+    public void initRecyclerView() {
         // Inside content_to_do_home
-        RecyclerView recyclerView = findViewById(R.id.RecyclerView);
+        RecyclerView recyclerView = findViewById(R.id.list_note);
         Adapter adapter = new Adapter(noteImages, noteTitles, this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(NUM_COLUMNS, LinearLayoutManager.VERTICAL);
 
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
+    }
 }
